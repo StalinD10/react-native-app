@@ -8,6 +8,8 @@ import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navig
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import PDFScreen from '../screens/PDFScreen';
+
 const Tab = createMaterialBottomTabNavigator();
 
 function BottombNavigation() {
@@ -45,6 +47,14 @@ function BottombNavigation() {
                     )
                 }}
                 component={IconsScreen} />
+
+            <Tab.Screen name="PDF"
+                options={{
+                    tabBarIcon: () => (
+                        <FontAwesome5 name="file-pdf" size={24} color="black" />
+                    )
+                }}
+                component={PDFScreen} />
         </Tab.Navigator>
     )
 }

@@ -1,60 +1,57 @@
 import React, { useState } from 'react'
-import { Button, StyleSheet, TextInput, View } from 'react-native'
-import * as DocumentPicker from 'expo-document-picker';
-import pdfFile from '../api/pdfFile';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import * as ExpoDocumentPicker from "expo-document-picker";
+
 import axios from 'axios';
+import pdfFile from '../api/pdfFile';
 
 
 function PDFScreen() {
 
-    const [document, setDocument] = useState();
-    const [data, setData] = useState();
-    const [promt, onChangePromt] = useState("");
-    const pickDocument = async () => {
+    const [pdfDoc, setPdfDoc] = useState()
+    const [question, setQuestion] = useState('')
+    const [result, setResult] = useState('')
 
-        let result: any = await DocumentPicker.getDocumentAsync({
-            type: 'application/pdf'
-        });
-        setDocument(result.assets[0])
+    const handleFilePicker = async () => {
+        let result: any = await ExpoDocumentPicker.getDocumentAsync({ copyToCacheDirectory: true });
+        console.log(result.assets[0])
+        setPdfDoc(result.assets[0])
     }
 
-    const handleVerify = async () => {
-        const formData = new FormData();
-        formData.append("pdf", document);
-        formData.append("question", promt);
-    
+
+    const handleUpload = async () => {
         try {
-            const resp = await fetch('http://192.168.0.130:5500/api/uploadFile', {
+           const data:any = {
+            question: question,
+            pdf: pdfDoc
+           }
+            console.log(data);
+            const response = await fetch("https://moviles-back.onrender.com/api/uploadFile", {
                 method: 'POST',
-                body: formData,
-                
-            });    
-            if (!resp.ok) {
-                throw new Error('Network response was not ok');
+                body: data
+            })
+            console.log(response)
+            if (response.ok) {
+                setQuestion('')
+                const responseJSON = await response.json()
+                setResult(responseJSON.text)
             }
-                const data = await resp.json();
-            setData(data);
-            console.log(data)
+
+
         } catch (error) {
-            console.log(error);
+            console.log(error)
         }
+
     }
 
+    console.log(result)
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Button
-                title='Abrir'
-                onPress={pickDocument}
-            />
-            <TextInput
-                style={styles.input}
-                value={promt}
-                onChangeText={onChangePromt}
-            />
-            <Button
-                title='Analizar'
-                onPress={handleVerify}
-            />
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+            <Button title={'Select PDF'} onPress={handleFilePicker} />
+            <TextInput style={styles.input} value={question} onChangeText={setQuestion}
+                placeholder={'Ingresa tu pregunta'} />
+            <Button title={'send'} onPress={handleUpload} />
+            <Text>{result}</Text>
         </View>
     )
 }
@@ -63,10 +60,10 @@ export default PDFScreen
 
 const styles = StyleSheet.create({
     input: {
-        height: 40,
-        width: 350,
-        margin: 12,
+        backgroundColor: 'white',
         borderWidth: 1,
+        borderRadius: 10,
         padding: 10,
-    },
-});
+        margin: 10
+    }
+})

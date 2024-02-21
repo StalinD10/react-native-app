@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const pdfFile: any = axios.create({
-    baseURL: "http://localhost:9022/api"
+const pdfFile:any = axios.create({
+    baseURL: 'https://moviles-back.onrender.com/api',
 })
 export default pdfFile;

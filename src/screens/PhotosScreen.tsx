@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 import usePhotos from '../hooks/usePhotos'
 import Card from '../components/Card';
-import { Urls } from '../interfaces/dataInterface';
 import HorizontalSlider from '../components/HorizontalSlider';
 
 function PhotosScreen() {

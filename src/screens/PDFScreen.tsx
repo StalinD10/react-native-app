@@ -13,7 +13,8 @@ function PDFScreen() {
     const [result, setResult] = useState('')
 
     const handleFilePicker = async () => {
-        let result: any = await ExpoDocumentPicker.getDocumentAsync({ copyToCacheDirectory: true });
+        let result: any = await ExpoDocumentPicker.getDocumentAsync({ copyToCacheDirectory: true, 
+           multiple:true , });
         console.log(result.assets[0])
         setPdfDoc(result.assets[0])
     }

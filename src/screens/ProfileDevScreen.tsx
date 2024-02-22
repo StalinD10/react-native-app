@@ -6,7 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 function ProfileDevScreen() {
   return (
     <View style={styles.container}>
-      <ImageBackground source={require("../img/background.jpg")} resizeMode="cover" style={{width:"100%", height:250, paddingTop:35, alignItems:"center", marginBottom:300}}>
+      <ImageBackground source={require("../img/background.jpg")} resizeMode="cover" style={{width:"100%", height:250, paddingTop:35, alignItems:"center"}}>
       <Image
         source={require('../img/sando.png')}
         style={styles.img}
@@ -31,19 +31,17 @@ export default ProfileDevScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 90
   },
   img: {
     width: 220,
     height: 200,
-    borderRadius:200
+    borderRadius:200,
+    marginTop: 80
   },
   imgKawai: {
     width: 80,
     height: 80,
-    borderRadius:200
+    borderRadius:80
   },
   title: {
     fontSize: 30,
